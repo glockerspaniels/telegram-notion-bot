@@ -1,6 +1,7 @@
 import { onLogCommand } from "./telegram/telegram-commands.js";
+import logger from "./utils/logger.js";
 
-console.log("Telegram bot Yanapapaya is now running...");
+logger.info("Telegram bot Yanapapaya is now running...");
 
 // Waiting for `/log I ate burgers for dinner` command.
 onLogCommand();

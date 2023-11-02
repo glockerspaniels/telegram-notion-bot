@@ -1,3 +1,5 @@
+import { lovingFoodResponses } from "./constants.js";
+
 export const formatDateWithSingaporeTimeZone = () => {
   const date = new Date();
   const offsetMinutes = -480; // UTC+8 offset in minutes
@@ -15,6 +17,10 @@ export const extractKeywords = (inputString) => {
     extractedParts.push(betweenAteAndFor[1].trim());
   }
   extractedParts.push(lastWord.charAt(0).toUpperCase() + lastWord.slice(1));
-
   return extractedParts;
 };
+
+export const getRandomLovingResponse = () => {
+  const randomIndex = Math.floor(Math.random() * lovingFoodResponses.length);
+  return lovingFoodResponses[randomIndex];
+}
