@@ -1,14 +1,12 @@
-import { extractKeywords, getRandomLovingResponse } from "../helpers.js";
-import { TELEGRAM_USERNAME_TO_NAME, TELEGRAM_USERNAME_TO_NOTION_ID } from "../mapper.js";
-import { newFoodLogEntry } from "../notion/notion-routes.js";
 import { bot } from "./telegram-config.js";
 import logger from "../utils/logger.js";
+import { logFoodItemService } from "../services/logFoodItemService.js";
+import { getWeeklyFoodService } from "../services/getWeeklyFoodService.js";
 
-// Log food item to Notion
-export const onLogCommand = () => {
-  bot.onText(/\/log/, (message) => {
+export const onLogCommand = async () => {
+  bot.onText(/\/log/, async (message) => {
     const { message_id: originalMessageId, from: { username }, chat: { id: chatId } } = message;
-  
+    
     if (message.text.split(' ').length < 2) {
       logger.error(`Invalid Input Error. Got: ${message.text}`)
 
@@ -16,36 +14,26 @@ export const onLogCommand = () => {
         {reply_to_message_id: originalMessageId}
       );
 
+      logger.error("Invalid user input.")
       return
     }
 
-    const notionUserId = TELEGRAM_USERNAME_TO_NOTION_ID[username];
-    const keywords = extractKeywords(message.text);
-    const foodName = keywords[0];
-    const mealTime = keywords[1];
-  
-    if (foodName === undefined) {
-      logger.error(`Invalid food name. Got ${foodName}`)
-      return
-    }
-  
-    if (mealTime === undefined) {
-      logger.error(`Invalid meal time. Got ${mealTime}`)
-      return
-    }
+    const responseMessage = await logFoodItemService(message.text, username)
 
-    newFoodLogEntry(notionUserId, foodName, mealTime);
-
-    let responseMessage = '';
-    if (TELEGRAM_USERNAME_TO_NAME[username] === 'Tatiana') {
-      responseMessage += `Nice Yana! Logged your food intake: ${foodName} for ${mealTime}. \n`;
-      responseMessage += getRandomLovingResponse();
-    } else {
-      responseMessage += `K . Tks .`;
-    }
-  
     bot.sendMessage(chatId, responseMessage, {
       reply_to_message_id: originalMessageId
     })
   });
 };
+
+export const onWeeklyfoodCommand = () => {
+  bot.onText(/\/weeklyfood/, async (message) => {
+    const { message_id: originalMessageId, from: { username }, chat: { id: chatId } } = message;
+    
+    const responseMessage = await getWeeklyFoodService(username);
+
+    bot.sendMessage(chatId, responseMessage, {
+      reply_to_message_id: originalMessageId
+    })
+  });
+}

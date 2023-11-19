@@ -1,5 +1,5 @@
 import { notion } from './notion-config.js';
-import { formatDateWithSingaporeTimeZone } from "../helpers.js";
+import { currentDate } from "../helpers.js";
 import logger from "../utils/logger.js";
 
 const databaseId = "1f3bc223cdc24c9faeb814f2c70700ab";
@@ -18,9 +18,8 @@ export const newFoodLogEntry = async (notionUserId, foodName, mealTime) => {
       },
       "Date": {
         "date": {
-          "start": formatDateWithSingaporeTimeZone(),
-          "end": null,
-          "time_zone": "Asia/Singapore"
+          "start": currentDate(),
+          "end": null
         }
       },
       "Person": {
