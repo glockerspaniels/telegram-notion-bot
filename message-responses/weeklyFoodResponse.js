@@ -50,7 +50,7 @@ export const getWeeklyFoodSummary = (mealData) => {
       day: 'numeric'
     });
   
-    report += `${dayOfWeek} ${formattedDate}\n`;
+    report += `*${dayOfWeek} ${formattedDate}*\n`;
   
     const meals = summary.mealsByDate[date];
   

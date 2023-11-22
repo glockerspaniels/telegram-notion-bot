@@ -1,7 +1,5 @@
-import { lovingFoodResponses } from "./constants.js";
-
 export const getCurrentDate = () => {
-  const currentDateInSingapore = new Date('2023-11-19T15:30:45').toLocaleString('en-US', {
+  const currentDateInSingapore = new Date().toLocaleString('en-US', {
     timeZone: 'Asia/Singapore',
     year: 'numeric',
     month: '2-digit',
@@ -37,8 +35,3 @@ export const extractKeywords = (inputString) => {
   extractedParts.push(lastWord.charAt(0).toUpperCase() + lastWord.slice(1));
   return extractedParts;
 };
-
-export const getRandomLovingResponse = () => {
-  const randomIndex = Math.floor(Math.random() * lovingFoodResponses.length);
-  return lovingFoodResponses[randomIndex];
-}

@@ -27,14 +27,9 @@ RUN npm ci
 # Copy application code
 COPY --link . .
 
-RUN npx prisma generate
-
 # Final stage for app image
 FROM base
 
-# Specifically this:
-RUN apt-get update -qq && \
-    apt-get install -y openssl
 # Copy built application
 COPY --from=build /app /app
 

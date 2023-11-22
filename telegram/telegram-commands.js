@@ -1,6 +1,6 @@
 import { bot } from "./telegram-config.js";
 import logger from "../utils/logger.js";
-import { logFoodItemService } from "../services/logFoodItemService.js";
+import { createFoodItemService } from "../services/createFoodItemService.js";
 import { getWeeklyFoodService } from "../services/getWeeklyFoodService.js";
 
 export const onLogCommand = async () => {
@@ -18,7 +18,7 @@ export const onLogCommand = async () => {
       return
     }
 
-    const responseMessage = await logFoodItemService(message.text, username)
+    const responseMessage = await createFoodItemService(message.text, username)
 
     bot.sendMessage(chatId, responseMessage, {
       reply_to_message_id: originalMessageId
@@ -29,8 +29,9 @@ export const onLogCommand = async () => {
 export const onWeeklyfoodCommand = () => {
   bot.onText(/\/weeklyfood/, async (message) => {
     const { message_id: originalMessageId, from: { username }, chat: { id: chatId } } = message;
-    
+    console.log("got your request for weeklyfood")
     const responseMessage = await getWeeklyFoodService(username);
+    
 
     bot.sendMessage(chatId, responseMessage, {
       reply_to_message_id: originalMessageId
