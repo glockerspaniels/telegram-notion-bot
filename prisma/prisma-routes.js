@@ -15,6 +15,7 @@ export const createFoodItem = async (date, mealType, name, user) => {
     logger.info('Successfully logged to prisma.')
   } catch(error) {
     logger.error('Error writing to prisma:', error)
+    console.log(error)
   }
 }
 
@@ -37,5 +38,6 @@ export const getFoodItems = async (userList, startDate, endDate) => {
     return foodItems
   } catch (error) {
     logger.error("Something went wrong querying Prisma.", error)
+    console.log(error)
   }
 }

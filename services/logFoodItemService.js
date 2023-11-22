@@ -15,7 +15,9 @@ export const logFoodItemService = async (message, username) => {
   }
 
   // Log to Prisma
+  logger.info("Logging food...Waiting for prisma...")
   createFoodItem(getCurrentDate(), mealTime, foodName, TELEGRAM_USERNAME_TO_NAME[username])
+  logger.info("Logged.")
 
   let responseMessage = '';
   if (TELEGRAM_USERNAME_TO_NAME[username] === 'Tatiana') {
