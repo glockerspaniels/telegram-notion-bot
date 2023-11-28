@@ -5,6 +5,9 @@ import { getWeeklyFoodSummary } from "../message-responses/weeklyFoodResponse.js
 import { connectDB } from '../utils/connectDB.js';
 import FoodLogger from '../models/FoodLogger.js';
 import { MAX_RETRIES } from '../constants.js';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const getWeeklyFoodService = async (username) => {
   const startDate = getCurrentDate()
