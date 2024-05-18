@@ -7,3 +7,6 @@ const logger = pino({
 })
 
 export default logger;
+
+
+// trying out pino pretty
